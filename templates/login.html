@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<!--
+        templates/login.html
+
+        Template de página de login do sistema "Jornada DIGITAL @soucarbonell".
+
+        Propósito:
+        - Permitir que o visitante escolha entre o perfil "Responsável" (login via API
+            Sophia com código/RM e senha) ou "Estudante" (autenticação via Google OAuth).
+
+        Estrutura e pontos importantes:
+        - O formulário de responsável faz POST para a rota Flask `url_for('login')`.
+        - O botão de estudante redireciona para a rota Flask `url_for('login_google')`.
+        - Mensagens flash (erros/alertas) são exibidas usando o bloco Jinja2 `get_flashed_messages`.
+        - IDs/Classes usados pelo JavaScript (não alterar sem atualizar o script):
+                * `btn-responsavel`  -> botão que mostra o formulário do responsável
+                * `btn-estudante`    -> botão que mostra o formulário do estudante
+                * `form-responsavel` -> container do formulário do responsável
+                * `form-estudante`   -> container do formulário do estudante
+
+        Notas de manutenção:
+        - Ao alterar IDs ou nomes de classes referenciados no script abaixo, atualize
+            os seletores correspondentes no bloco <script> para manter o comportamento.
+        - Imagens e estilos estão em `static/` (ex.: `static/img/logo.png`, `static/style.css`).
+        - Esta documentação foi adicionada apenas como comentário; nenhuma lógica
+            ou marcação visível ao usuário foi alterada.
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portal de Acessos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        
+        <div class="login-logo-container">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Colégio Carbonell">
+        </div>
+
+        <h1>Jornada DIGITAL @soucarbonell</h1>
+        <p>Por favor, selecione seu perfil para continuar.</p>
+
+        <div class="login-choice-container">
+            <button type="button" id="btn-responsavel" class="btn-choice">Sou responsável</button>
+            
+            <a href="{{ url_for('login_google') }}" id="btn-estudante" class="btn-choice">
+                Sou estudante
+            </a>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-danger">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div id="form-responsavel" class="form-container" style="display: none;">
+            <form method="post" action="{{ url_for('login') }}" class="login-form">
+                <label for="codigo" class="sr-only">Usuário (RM)</label>
+                <input type="text" id="codigo" name="codigo" placeholder="Usuário (RM)" required>
+                
+                <label for="senha" class="sr-only">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Senha" required>
+                
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos do fluxo do RESPONSÁVEL
+            const btnResponsavel = document.getElementById('btn-responsavel');
+            const formResponsavel = document.getElementById('form-responsavel');
+
+            // Lógica para alternar a visibilidade do formulário do responsável
+            if (btnResponsavel && formResponsavel) {
+                btnResponsavel.addEventListener('click', function() {
+                    
+                    const isHidden = formResponsavel.style.display === 'none';
+
+                    if (isHidden) {
+                        // Mostra o formulário
+                        formResponsavel.style.display = 'block';
+                        btnResponsavel.classList.add('active');
+                    } else {
+                        // Esconde o formulário
+                        formResponsavel.style.display = 'none';
+                        btnResponsavel.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

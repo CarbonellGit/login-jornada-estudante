@@ -1,0 +1,219 @@
+/* Importa a fonte do Google Fonts para manter a consistência visual */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+/* Define a paleta de cores como variáveis globais para fácil manutenção */
+:root {
+    --carbonell-azul-escuro: #2b3a6c;
+    --carbonell-azul-marinho: #1e2a4d;
+    --carbonell-amarelo: #f7b53b;
+    --carbonell-branco: #ffffff;
+    --fundo-claro: #f8f9fa;
+}
+
+/* NOVA CLASSE DE ACESSIBILIDADE:
+    - A classe .sr-only (screen-reader only) oculta elementos visualmente.
+    - É usada para as tags <label> no formulário de login, garantindo que leitores de tela
+      possam identificar os campos sem alterar o design original da página.
+    - Essa técnica é uma boa prática padrão em desenvolvimento web acessível.
+*/
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+
+/* Estilos gerais para o corpo da página */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--fundo-claro);
+    color: var(--carbonell-azul-marinho);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa a altura total da tela */
+}
+
+/* Container principal que centraliza o conteúdo de login */
+.login-container {
+    background-color: var(--carbonell-branco);
+    padding: 2.5rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 420px; /* Largura máxima do card de login */
+}
+
+/* Estilo para a imagem da logo */
+.login-logo-container img {
+    max-width: 350px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+/* Estilos para os textos (título e parágrafo) */
+.login-container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.login-container p {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+/* Formulário e seus componentes */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espaçamento entre os campos */
+}
+
+.login-form input {
+    padding: 14px 18px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif; /* Garante a mesma fonte nos inputs */
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: var(--carbonell-azul-escuro);
+    box-shadow: 0 0 0 3px rgba(43, 58, 108, 0.1);
+}
+
+.login-form button {
+    padding: 14px 20px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--carbonell-azul-escuro);
+    color: var(--carbonell-branco);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+    background-color: var(--carbonell-azul-marinho); /* Efeito ao passar o mouse */
+}
+
+/* Estilo para as mensagens de erro (flash messages) */
+.flash-message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.flash-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/*
+--- ESTILOS ADICIONADOS PARA LOGIN HÍBRIDO ---
+*/
+
+/* Container para os botões de escolha de perfil */
+.login-choice-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espaço entre os botões */
+    margin-bottom: 1.5rem;
+}
+
+/* Estilo base dos botões de escolha */
+.btn-choice {
+    flex-grow: 1; /* Faz os botões ocuparem o espaço disponível */
+    padding: 12px 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    border: 2px solid #ccc;
+    background-color: #f8f9fa;
+    color: var(--carbonell-azul-marinho);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+
+    /* ADIÇÕES PARA SUPORTE A LINK (<a>) */
+    text-decoration: none;      /* Remove sublinhado se for link */
+    display: flex;              /* Garante alinhamento flexbox interno */
+    align-items: center;        /* Centraliza texto verticalmente */
+    justify-content: center;    /* Centraliza texto horizontalmente */
+    box-sizing: border-box;     /* Garante que padding não estoure a largura */
+}
+
+/* Efeito hover (passar o mouse) */
+.btn-choice:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+/* Estilo do botão de escolha ATIVO (quando selecionado) */
+.btn-choice.active {
+    background-color: var(--carbonell-azul-escuro);
+    color: var(--carbonell-branco);
+    border-color: var(--carbonell-azul-escuro);
+}
+
+/* Container que agrupa os formulários (para ocultar/exibir) */
+.form-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* Parágrafo de instrução dentro de cada formulário */
+.form-instruction {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+/*
+--- Estilo para o Botão de Login do Google ---
+*/
+.btn-google-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* Espaço entre o logo e o texto */
+
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    color: #444; /* Cor de texto padrão do Google */
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-decoration: none; /* Remove sublinhado do link */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google-login img {
+    /* Garante que a imagem do logo não seja afetada */
+    width: 20px;
+    height: 20px;
+}
+
+.btn-google-login:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
